@@ -1,0 +1,19 @@
+extends layouts/main-layout.pug
+block styles
+    link(rel="stylesheet", href="/css/character.css")
+block content
+    main
+        if chars.length > 0
+            .grid
+                each character in chars
+                    article.card.character-item
+                        header.card__header
+                            h1.character__name #{character.name}
+                        .card__image
+                            img(src=character.image, alt="Character Image")
+                        .card__content
+                            h2.character__class Class: #{character.class}
+                        .card__level
+                            h3.character__level Level: #{character.level}
+        else
+            h1 No Characters Found!

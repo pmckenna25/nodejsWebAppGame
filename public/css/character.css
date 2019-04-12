@@ -1,0 +1,28 @@
+.character-form {
+    width: 20rem;
+    max-width: 90%;
+    margin: auto;
+}
+
+.character-item {
+    width: 20rem;
+    height: auto;
+    margin-bottom: 1rem;
+    max-width: 95%;
+    background: rgba(96, 93, 255, 0.507);
+}
+
+.character__name {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.character__level {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 1rem;
+}
+
+.character__class {
+    text-align: center;
+}
