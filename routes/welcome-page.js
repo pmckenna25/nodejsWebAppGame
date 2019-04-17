@@ -2,12 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) =>{
+const userController = require('../controllers/user-controller');
 
-    res.render('welcome-page', {
-        docTitle: 'Welcome Page',
-        path: '/'
-    });
-});
+router.get('/', userController.getWelcome);
 
 module.exports = router;

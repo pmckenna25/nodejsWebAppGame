@@ -5,7 +5,7 @@
 .form-control label{
     font-size: 200%;
     margin-bottom: 0.25rem;
-    color: #b8db1d;
+    color: black;
 }
 .form-control input {
     display: block;
@@ -23,3 +23,16 @@
     outline-color: #00695c;
 }
 
+.form-title {
+    text-align: center;
+    color: black;
+}
+
+.small-form {
+    box-shadow: 0 2px 8px rgb(0, 0, 0);
+    min-width: 45%;
+    margin-top: 3.5rem;
+    font-size: auto;
+    background: #32d3f0a4;
+    color: teal;
+  }

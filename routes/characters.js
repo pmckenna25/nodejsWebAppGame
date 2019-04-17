@@ -1,18 +1,9 @@
 const express = require('express')
-const path = require('path');
-const rootDir = require('../util/path');
-const charData = require('./add-character');
+
 const router = express.Router();
 
-router.get('/characters', (req, res, next) =>{
+const userController = require('../controllers/user-controller')
 
-    const character = charData.characters;
-
-    res.render('characters', {
-        chars: character,
-        docTitle: 'Characters', 
-        path: '/characters'
-    });
-});
+router.get('/characters', userController.getCharacters);
 
 module.exports = router;
