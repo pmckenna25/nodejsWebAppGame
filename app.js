@@ -5,6 +5,7 @@ const bodyparser = require('body-parser');
 const addRouter = require('./routes/add-character');
 const charsRouter = require('./routes/characters');
 const welcomeRouter = require('./routes/welcome-page')
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -19,4 +20,10 @@ app.use(addRouter);
 app.use(charsRouter);
 app.use(welcomeRouter);
 
-app.listen(8080);
+sequelize.sync().then(result => {
+
+    app.listen(8080);
+})
+.catch(err => {
+    console.log(err);
+})

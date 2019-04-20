@@ -23,18 +23,25 @@ exports.postAddCharacter = (req, res, next) => {
     const classType = req.body.classType;
     const level = req.body.level;
 
-    const character = new Character(name, imageUrl, classType, level);
-    character.save();
-    res.redirect('/characters');
+    Character.create({
+        name: name,
+        imageUrl: imageUrl,
+        classType: classType,
+        level: level
+    }).then(() =>{
+        return res.redirect('/characters');
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getCharacters = (req, res, next) => {
 
-    Character.fetchAll(characters => {
+    Character.findAll().then(characters => {
         res.render('user/user-characters', {
             chars: characters,
             docTitle: 'Characters',
             path: '/characters'
-        })
-    });
+        });
+    })
+    .catch(err => console.log(err));
 };

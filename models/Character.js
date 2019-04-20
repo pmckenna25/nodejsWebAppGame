@@ -1,42 +1,31 @@
-const fs = require('fs');
-const path = require('path');
+const Sequelize = require('sequelize');
+const sequelize = require('../util/database');
 
-const p = path.join(path.dirname(process.mainModule.filename),
-    'data',
-    'characters.json'
-);
 
-const getCharactersFromFile = (cb) => {
-    fs.readFile(p, (err, fileContent) =>{
-        if(err){
-            cb([]);
-        }else{
-            cb(JSON.parse(fileContent));
-        }
-    });
-};
-module.exports = class Character{
+const Character = sequelize.define('character', {
 
-    constructor(name, imageUrl, classType, level){
-
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.classType = classType;
-        this.level = level;
+    id:{
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull:false
+    },
+    classType: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    level: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
+})
 
-    save(){
-
-        this.id = Math.random().toString();
-        getCharactersFromFile(characters =>{
-            characters.push(this);
-            fs.writeFile(p, JSON.stringify(characters), err =>{
-                console.log(err);
-            });
-        });
-    }
-
-    static fetchAll(cb){
-        getCharactersFromFile(cb);
-    };
-};
+module.exports = Character;
