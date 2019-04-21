@@ -8,13 +8,51 @@ exports.getWelcome = (req, res, next) =>{
     });
 };
 
-exports.getAddProduct = (req, res, next) => {
+exports.getAddCharacter = (req, res, next) => {
 
-    res.render('admin/add-character', {
+    res.render('user/add-character', {
         docTitle: 'Create Character',
-        path: '/add-character'
+        path: '/add-character',
+        editing: false
     });
 }
+
+exports.getEditCharacter = (req, res, next) => {
+
+    const charId = req.params.Id;
+
+    console.log(charId);
+    Character.findByPk(charId)
+        .then(char => {
+            res.render('user/add-character', {
+                character: char,
+                docTitle: 'Edit Character',
+                path: '/add-character',
+                editing: true
+        });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postEditCharacter = (req, res, next) => {
+
+    const charId = req.body.charId;
+    const name = req.body.name;
+    const imageUrl = req.body.imageUrl;
+    const classType = req.body.classType;
+    const level = req.body.level;
+
+    Character.update({
+        name: name,
+        imageUrl: imageUrl,
+        classType: classType,
+        level: level
+    },{
+        where: {id: charId}
+    }).then(() => {
+        return res.redirect('/characters');
+    }).catch(err => console.log(err));
+};
 
 exports.postAddCharacter = (req, res, next) => {
 
@@ -44,4 +82,29 @@ exports.getCharacters = (req, res, next) => {
         });
     })
     .catch(err => console.log(err));
+};
+
+exports.getCharacterDetails = (req, res, next) =>{
+
+    const charId = req.params.Id;
+    
+    Character.findByPk(charId)
+        .then(char => {
+            res.render('user/character-details', {
+                char: char,
+                docTitle: char.name,
+                path: '/characters'
+            });
+        })
+        .catch(err => console.log(err));
+};
+
+exports.deleteCharacter = (req, res, next) => {
+
+    const charId = req.params.Id;
+    Character.destroy({where: {id: charId}})
+        .then(()=>{
+            return res.redirect('/characters');
+        })
+        .catch(err => console.log(err));
 };

@@ -62,6 +62,26 @@ main {
   color: #ffeb3b;
 }
 
+.centered {
+  text-align: center;
+}
+
+.image {
+  height: 20rem;
+}
+
+.image img {
+  height: 100%;
+}
+
+.sheet {
+  margin-top: 3.5rem;
+}
+
+.inline{
+  display: inline;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;

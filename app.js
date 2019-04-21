@@ -2,8 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyparser = require('body-parser');
 
-const addRouter = require('./routes/add-character');
-const charsRouter = require('./routes/characters');
+const characterRoutes = require('./routes/characterRoutes');
 const welcomeRouter = require('./routes/welcome-page')
 const sequelize = require('./util/database');
 
@@ -16,8 +15,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(addRouter);
-app.use(charsRouter);
+app.use(characterRoutes);
 app.use(welcomeRouter);
 
 sequelize.sync().then(result => {
