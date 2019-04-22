@@ -1,13 +1,19 @@
-const request = require('supertest');
 const app = require('../app.js');
+const request = require('supertest').agent(app);
 
 /**
  * Testing get the frontpage request
  */
 describe('GET /', () =>{
+
+    // after((done) =>{
+    //     app.close();
+    //     done();
+    // });
+
     it('respond with welcome-page.ejs page', (done) =>{
 
-        request(app)
+        request
             .get('/')
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
@@ -20,13 +26,18 @@ describe('GET /', () =>{
  */
 
 describe('GET /add-character', () =>{
-    it('respond with add-character.ejs page', (done) =>{
-        
-        request(app)
-        .get('/add-character')
-        .set('Accept', 'application/json')
-        .expect('Content-Type', /html/)
-        .expect(200, done);
+
+    // after((done) =>{
+    //     app.close();
+    //     done();
+    // });
+
+    it('respond with add-character.ejs page', (done) =>{ 
+        request
+            .get('/add-character')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /html/)
+            .expect(200, done);
     });
 });
 
