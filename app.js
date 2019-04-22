@@ -20,8 +20,10 @@ app.use(welcomeRouter);
 
 sequelize.sync().then(result => {
 
-    app.listen(8080);
+    app.listen(process.env.PORT || 80);
 })
 .catch(err => {
     console.log(err);
 })
+
+module.exports = app;
