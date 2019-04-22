@@ -12,7 +12,7 @@ describe('GET /', () =>{
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
             .expect(200, done);
-    })
+    });
 });
 
 /**
@@ -27,7 +27,7 @@ describe('GET /add-character', () =>{
         .set('Accept', 'application/json')
         .expect('Content-Type', /html/)
         .expect(200, done);
-    })
+    });
 });
 
 /**
@@ -41,5 +41,5 @@ describe('GET /add-character', () =>{
 //             .set('Accept', 'application/json')
 //             .expect('Content-Type', /html/)
 //             .expect(200, done);
-//     })
+//     });
 // });
