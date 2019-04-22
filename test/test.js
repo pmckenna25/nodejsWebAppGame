@@ -33,13 +33,13 @@ describe('GET /add-character', () =>{
 /**
  * Testing get the character page request
  */
-describe('GET /characters', () =>{
-    it('respond with user-characters.ejs page', (done) =>{
+// describe('GET /characters', () =>{
+//     it('respond with user-characters.ejs page', (done) =>{
 
-        request(app)
-            .get('/characters')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /html/)
-            .expect(200, done);
-    })
-});
+//         request(app)
+//             .get('/characters')
+//             .set('Accept', 'application/json')
+//             .expect('Content-Type', /html/)
+//             .expect(200, done);
+//     })
+// });
