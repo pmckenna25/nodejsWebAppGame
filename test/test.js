@@ -16,6 +16,21 @@ describe('GET /', () =>{
 });
 
 /**
+ * Testing get the add-character page request
+ */
+
+describe('GET /add-character', () =>{
+    it('respond with add-character.ejs page', (done) =>{
+        
+        request(app)
+        .get('/add-character')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /html/)
+        .expect(200, done);
+    })
+});
+
+/**
  * Testing get the character page request
  */
 describe('GET /characters', () =>{
@@ -23,20 +38,6 @@ describe('GET /characters', () =>{
 
         request(app)
             .get('/characters')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /html/)
-            .expect(200, done);
-    })
-});
-
-/**
- * Testing get the add-character page request
- */
-describe('GET /add-character', () =>{
-    it('respond with add-character.ejs page', (done) =>{
-
-        request(app)
-            .get('/add-character')
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
             .expect(200, done);
