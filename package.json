@@ -12,13 +12,14 @@
     "mysql2": "^1.6.5",
     "pug": "^2.0.3",
     "sequelize": "^4.0.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "why-is-node-running": "^2.1.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "test": "mocha 'test/test.js'",
+    "test": "mocha 'test/test.js' --exit",
     "start": "nodemon app.js"
   },
   "author": "PMK",
