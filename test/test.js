@@ -1,8 +1,6 @@
 const app = require('../app')
 const request = require('supertest');
 
-app.server = app.listen(8080);
-
 /**
  * Testing get the frontpage request
  */
@@ -10,7 +8,7 @@ describe('GET /', () =>{
 
     it('respond with welcome-page.ejs page', (done) =>{
 
-        request(app.server)
+        request(app.listen())
             .get('/')
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
@@ -26,7 +24,7 @@ describe('GET /', () =>{
 describe('GET /add-character', () =>{
 
     it('respond with add-character.ejs page', (done) =>{ 
-        request(app.server)
+        request(app.listen())
             .get('/add-character')
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
@@ -41,7 +39,7 @@ describe('GET /add-character', () =>{
 describe('GET /characters', () =>{
     
     it('respond with user-characters.ejs page', (done) =>{
-        request(app.server)
+        request(app.listen())
             .get('/characters')
             .set('Accept', 'application/json')
             .expect('Content-Type', /html/)
