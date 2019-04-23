@@ -1,5 +1,5 @@
 #!/bin/sh
-ssh ec2-35-178-201-169.eu-west-2.compute.amazonaws.com  <<EOF
+ssh ubuntu@ec2-35-178-201-169.eu-west-2.compute.amazonaws.com  <<EOF
  cd ~/nodejsWebAppGame
  git pull
  npm install — production
