@@ -1,7 +1,7 @@
 #!/bin/bash
 
-ADDRESS1=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[0].Instances[*].PrivateIpAddress" --output=text | head -1)
-ADDRESS2=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[1].Instances[*].PrivateIpAddress" --output=text | tail -1)
+ADDRESS1=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[*].Instances[*].PrivateIpAddress" --output=text | head -1)
+ADDRESS2=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[*].Instances[*].PrivateIpAddress" --output=text | tail -1)
 
 ADDRESS1=${ADDRESS1//./-}
 ADDRESS2=${ADDRESS2//./-}
