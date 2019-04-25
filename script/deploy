@@ -1,5 +1,20 @@
 #!/bin/sh
-ssh ubuntu@ec2-35-178-201-169.eu-west-2.compute.amazonaws.com  <<EOF
+
+ADDRESS1=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[0].Instances[*].PrivateIpAddress" --output=text)
+ADDRESS2=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[1].Instances[*].PrivateIpAddress" --output=text)
+
+ADDRESS1=${ADDRESS1//./-}
+ADDRESS2=${ADDRESS2//./-}
+
+ssh -oStrictHostKeyChecking=no ubuntu@ec2-${ADDRESS1}.eu-west-2.compute.amazonaws.com  <<EOF
+ cd ~/nodejsWebAppGame
+ git pull
+ npm install — production
+ pm2 restart all
+ exit
+EOF
+
+ssh -oStrictHostKeyChecking=no ubuntu@ec2-${ADDRESS2}.eu-west-2.compute.amazonaws.com  <<EOF
  cd ~/nodejsWebAppGame
  git pull
  npm install — production
