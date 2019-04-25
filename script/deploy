@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ADDRESS1=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[0].Instances[*].PrivateIpAddress" --output=text)
 ADDRESS2=$(aws ec2 describe-instances --filters "Name=tag:group,Values=node" --query "Reservations[1].Instances[*].PrivateIpAddress" --output=text)
