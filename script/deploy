@@ -10,7 +10,7 @@ ssh -oStrictHostKeyChecking=no ubuntu@ec2-${ADDRESS1}.eu-west-2.compute.amazonaw
  cd ~/nodejsWebAppGame
  git pull
  npm install — production
- sudo pm2 restart all
+ pm2 restart all
  exit
 EOF
 
@@ -18,6 +18,6 @@ ssh -oStrictHostKeyChecking=no ubuntu@ec2-${ADDRESS2}.eu-west-2.compute.amazonaw
  cd ~/nodejsWebAppGame
  git pull
  npm install — production
- sudo pm2 restart all
+ pm2 restart all
  exit
 EOF
