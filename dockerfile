@@ -5,12 +5,12 @@ LABEL description="Managed Content API"
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
-WORKDIR /opt/mc-api
+WORKDIR /src/
 COPY package.json package-lock.json ./
 
 RUN npm ci
 
-COPY . .
+COPY src/ src/
 
 EXPOSE 8080
-CMD node app.js
+CMD node src/app.js

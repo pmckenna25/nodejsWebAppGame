@@ -16,7 +16,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "test": "mocha 'test/test.js' --exit",
+    "test": "mocha 'src/test/test.js' --exit",
     "start": "nodemon app.js"
   },
   "author": "PMK",
