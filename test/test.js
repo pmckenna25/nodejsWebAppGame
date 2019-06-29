@@ -32,18 +32,3 @@ describe('GET /add-character', () =>{
             .end(done);
     });
 });
-
-/**
- * Testing get the character page request
- */
-describe('GET /characters', () =>{
-    
-    it('respond with user-characters.ejs page', (done) =>{
-        request(app.listen())
-            .get('/characters')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /html/)
-            .expect(200)
-            .end(done);
-    });
-});

@@ -1,12 +1,13 @@
+const config = require('../config');
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(
-    'Roleplaying',
-    'admin',
-    'Letmein20',
+    config.mysql_db,
+    config.mysql_user,
+    config.mysql_password,
     {
-        dialect: 'mysql', 
-        host: 'mysqldb.c2brgmesgzpg.eu-west-2.rds.amazonaws.com'
+        dialect: config.dialect, 
+        host: config.db_host
     }
 );
 

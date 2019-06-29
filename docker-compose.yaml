@@ -1,0 +1,44 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: Roleplaying
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password1234
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - net_roleplaying
+
+  app: &app
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      - db
+    env_file: .env.dev
+    ports:
+      - "8080:8080"
+    networks:
+      - net_roleplaying
+    links:
+      - db
+
+  smoke:
+    <<: *app
+    command: sh -c "npm run test"
+
+volumes:
+  db_data:
+
+networks: 
+  net_roleplaying:
+    driver: bridge
