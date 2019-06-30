@@ -1,5 +1,7 @@
-node('master') {
+node() {
   stage('Hello Jenkins'){
+    properties([pipelineTriggers([[$class: "GitHubPushTrigger"], pollSCM("")]), disableConcurrentBuilds()])
+    checkout scm
     sh'echo Hello Jenkins'
   }
 }
