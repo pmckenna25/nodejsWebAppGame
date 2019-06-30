@@ -18,7 +18,7 @@ node() {
 
     withCredentials([string(credentialsId: 'ecrRegistry', variable: 'ECR_REGISTRY')]) {
       stage('Tag and Push to ECR') {
-        sh "docker build . -t $gitHashTag $latestTag"
+        sh "docker build . -t $gitHashTag -t $latestTag"
         sh '$(aws ecr get-login --no-include-email --region eu-west-2)'
         sh "docker push $gitHashTag"
         sh "docker push $latestTag"
@@ -29,13 +29,13 @@ node() {
         sh """
         sed -E -i \
           -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
-          "ci/helm/cerberus/values.yaml"
+          "ci/helm/roleplaying/values.yaml"
         """
         sh "cat ci/helm/roleplaying/values.yaml"
-        sh "helm package --version=${gitHash} \
+        sh "helm package \
             --app-version='${gitHash}' \
             --save=false ci/helm/roleplaying"
-        sh "helm inspect roleplaying-${gitHash}.tgz"
+        sh "helm inspect roleplaying-0.1.0.tgz"
       }
     }
   }catch(error){
