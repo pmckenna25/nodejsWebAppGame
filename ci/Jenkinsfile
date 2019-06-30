@@ -1,5 +1,15 @@
 node() {
-  stage('Hello Jenkins'){
-    sh'echo Hello Jenkins'
+  try{
+    stage('Checkout'){
+      checkout scm
+    }
+    stage('Smoke test'){
+      sh 'docker-compose build smoke'
+      sh 'docker-compose run smoke'
+      sh 'docker-compose down'
+    }
+  }catch(error){
+    sh 'docker-compose down'
+    throw error
   }
 }
