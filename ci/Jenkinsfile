@@ -17,6 +17,7 @@ node() {
 
     stage('Tag and Push to ECR') {
       sh "docker build . -t $tag"
+      sh "$(aws ecr get-login --no-include-email --region eu-west-2)"
       sh "docker push $tag" 
     }
   }catch(error){
