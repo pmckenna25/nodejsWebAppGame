@@ -15,14 +15,12 @@ node() {
       sh '/usr/local/bin/docker-compose down'
     }
 
-    withCredentials([string(credentialsId: 'ecrRegistry', variable: 'ECR_REGISTRY')]) {
-
-      stage('Tag and Push to ECR') {
-        sh "docker build . -t $tag"
-        sh "docker push $tag" 
-      }
-
+    stage('Tag and Push to ECR') {
+      sh "docker build . -t $tag"
+      sh "dlogin"
+      sh "docker push $tag" 
     }
+    
   }catch(error){
     sh '/usr/local/bin/docker-compose down'
     throw error
