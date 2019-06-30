@@ -5,12 +5,12 @@ node() {
       checkout scm
     }
     stage('Smoke test'){
-      sh 'usr/local/bin/docker-compose build smoke'
-      sh 'usr/local/bin/docker-compose run smoke'
-      sh 'usr/local/bin/docker-compose down'
+      sh '/usr/local/bin/docker-compose build smoke'
+      sh '/usr/local/bin/docker-compose run smoke'
+      sh '/usr/local/bin/docker-compose down'
     }
   }catch(error){
-    sh 'usr/local/bin/docker-compose down'
+    sh '/usr/local/bin/docker-compose down'
     throw error
   }
 }
