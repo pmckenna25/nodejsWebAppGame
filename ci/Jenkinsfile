@@ -1,0 +1,5 @@
+node('master') {
+  stage('Hello Jenkins'){
+    sh'echo Hello Jenkins'
+  }
+}
