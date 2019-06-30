@@ -2,29 +2,28 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const Character = sequelize.define('character', {
-
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   imageUrl: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   classType: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   level: {
     type: Sequelize.INTEGER,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 module.exports = Character;

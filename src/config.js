@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 module.exports = {
   appPort: process.env.APP_PORT,
   nodeEnv: process.env.NODE_ENV,
