@@ -17,10 +17,9 @@ node() {
 
     stage('Tag and Push to ECR') {
       sh "docker build . -t $tag"
-      sh "dlogin"
       sh "docker push $tag" 
     }
-    
+
   }catch(error){
     sh '/usr/local/bin/docker-compose down'
     throw error
