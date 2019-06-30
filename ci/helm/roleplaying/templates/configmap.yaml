@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: '{{ .Release.Name }}-configmap'
+data:
+  environment.name: "{{ .Values.environment.name }}"
+  appPort: "{{ .Values.service.port }}"
+  {{ if .Values.contentSearch }}
+  contentSearchBaseUrl: "{{ .Values.contentSearch.baseUrl }}"
+    {{ if .Values.contentSearch.circuitBreaker }}
+  circuitBreakers.contentSearch.allowWarmUp: "{{ .Values.contentSearch.circuitBreaker.allowWarmUp }}"
+  circuitBreakers.contentSearch.timeout: "{{ .Values.contentSearch.circuitBreaker.timeout }}"
+  circuitBreakers.contentSearch.errorThresholdPercentage: "{{ .Values.contentSearch.circuitBreaker.errorThresholdPercentage }}"
+  circuitBreakers.contentSearch.resetTimeout: "{{ .Values.contentSearch.circuitBreaker.resetTimeout }}"
+  circuitBreakers.contentSearch.rollingCountTimeout:  "{{ .Values.contentSearch.circuitBreaker.rollingCountTimeout }}"
+  circuitBreakers.contentSearch.name: "{{ .Values.contentSearch.circuitBreaker.name }}"
+  circuitBreakers.contentSearch.group: "{{ .Values.contentSearch.circuitBreaker.group }}"
+    {{ end }}
+  {{ end }}

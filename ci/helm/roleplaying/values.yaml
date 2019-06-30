@@ -1,0 +1,38 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: 789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame:0615069
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 1
+
+service:
+  port: 80
+
+container:
+  port: 80
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 1
+    memory: 512Mi
+
+environment:
+  name: qa
+
+nodeSelector: {}
+
+ingress:
+  enabled: true
+  host: roleplaying.philipmckenna.co.uk
+  secret: roleplaying-tls
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
