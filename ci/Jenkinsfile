@@ -18,6 +18,7 @@ node() {
     withCredentials([string(credentialsId: 'ecrRegistry', variable: 'ECR_REGISTRY')]) {
       stage('Tag and Push to ECR') {
         sh "docker build . -t $tag"
+        sh "$(aws ecr get-login --region eu-west-2)"
         sh "docker push $tag" 
       }
     }
