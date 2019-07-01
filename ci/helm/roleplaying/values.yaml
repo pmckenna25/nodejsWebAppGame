@@ -36,3 +36,8 @@ hpa:
   enabled: true
   minReplicas: 1
   maxReplicas: 2
+
+# TODO add mysql dependency and pvc
+# currently this would deploy the service
+# without any database and therefore not
+# function as intended
