@@ -1,0 +1,45 @@
+#!/usr/bin/env groovy
+node() {
+  try{
+
+    stage('Checkout'){
+      checkout scm
+    }
+
+    def gitHash = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
+    def gitHashTag = "789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame:$gitHash"
+    def latestTag = "789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame:latest"
+
+    stage('Smoke test'){
+      sh '/usr/local/bin/docker-compose build smoke'
+      sh '/usr/local/bin/docker-compose run smoke'
+      sh '/usr/local/bin/docker-compose down'
+    }
+
+    withCredentials([string(credentialsId: 'ecrRegistry', variable: 'ECR_REGISTRY')]) {
+      stage('Tag and Push to ECR') {
+        sh "docker build . -t $gitHashTag -t $latestTag"
+        sh '$(aws ecr get-login --no-include-email --region eu-west-2)'
+        sh "docker push $gitHashTag"
+        sh "docker push $latestTag"
+      }
+    }
+    stage('Package Helm Chart') {
+      docker.image('alpine/helm:2.14.0').inside("--entrypoint='' -u 0:0") {
+        sh """
+        sed -E -i \
+          -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
+          "ci/helm/roleplaying/values.yaml"
+        """
+        sh "cat ci/helm/roleplaying/values.yaml"
+        sh "helm package \
+            --app-version='${gitHash}' \
+            --save=false ci/helm/roleplaying"
+        sh "helm inspect roleplaying-0.1.0.tgz"
+      }
+    }
+  }catch(error){
+    sh '/usr/local/bin/docker-compose down'
+    throw error
+  }
+}

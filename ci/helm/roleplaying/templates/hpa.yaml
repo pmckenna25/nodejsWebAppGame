@@ -1,0 +1,21 @@
+{{- if .Values.hpa.enabled -}}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "roleplaying.fullname" . }}-hpa
+  labels:
+    app.kubernetes.io/name: {{ include "roleplaying.name" . }}-hpa
+    helm.sh/chart: {{ include "roleplaying.chart" . }}-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: {{ include "roleplaying.fullname" . }}
+  minReplicas: {{ .Values.hpa.minReplicas }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+{{- end }}
