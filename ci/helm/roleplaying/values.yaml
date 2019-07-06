@@ -2,7 +2,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
-  repository: 789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame:0615069
+  repository: 789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame
   tag: latest
   pullPolicy: Always
 
@@ -36,6 +36,16 @@ hpa:
   enabled: true
   minReplicas: 1
   maxReplicas: 2
+
+mysql:
+  enabled: true
+  imageTag: 5.7
+  MYSQL_DATABASE: Roleplaying
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: password1234
+
+  persistence:
+    size: 1Gi
 
 # TODO add mysql dependency and pvc
 # currently this would deploy the service

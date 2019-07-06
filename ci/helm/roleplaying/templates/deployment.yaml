@@ -46,6 +46,21 @@ spec:
                 configMapKeyRef:
                   name: '{{ .Release.Name }}-configmap'
                   key: appPort
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: '{{ .Release.Name }}-configmap'
+                  key: mysql_db
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: '{{ .Release.Name }}-configmap'
+                  key: mysql_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: '{{ .Release.Name }}-configmap'
+                  key: mysql_password
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
