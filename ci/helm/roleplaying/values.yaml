@@ -2,7 +2,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 image:
-  repository: 789163415875.dkr.ecr.eu-west-2.amazonaws.com/pmckenna25/rpgame
+  repository: pmckenna25/roleplaying
   tag: latest
   pullPolicy: Always
 
@@ -40,9 +40,9 @@ hpa:
 mysql:
   enabled: true
   imageTag: 5.7
-  MYSQL_DATABASE: Roleplaying
-  MYSQL_USER: admin
-  MYSQL_PASSWORD: password1234
+  mysqlDatabase: Roleplaying
+  mysqlUser: admin
+  mysqlPassword: password1234
 
   persistence:
     size: 1Gi

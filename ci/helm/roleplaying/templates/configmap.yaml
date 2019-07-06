@@ -5,8 +5,3 @@ metadata:
 data:
   environment.name: "{{ .Values.environment.name }}"
   appPort: "{{ .Values.service.port }}"
-  {{ if .Values.mysql.enabled }}
-  mysql_db: "{{ .Values.mysql.MYSQL_DATABASE }}"
-  mysql_user: "{{ .Values.mysql.MYSQL_USER }}"
-  mysql_password: "{{ .Values.mysql.MYSQL_PASSWORD }}"
-  {{ end }}

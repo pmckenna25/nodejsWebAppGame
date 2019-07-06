@@ -47,20 +47,13 @@ spec:
                   name: '{{ .Release.Name }}-configmap'
                   key: appPort
             - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: '{{ .Release.Name }}-configmap'
-                  key: mysql_db
+              value: {{ .Values.mysql.mysqlDatabase }}
             - name: MYSQL_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: '{{ .Release.Name }}-configmap'
-                  key: mysql_user
+              value: {{ .Values.mysql.mysqlUser }}
             - name: MYSQL_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: '{{ .Release.Name }}-configmap'
-                  key: mysql_password
+              value: {{ .Values.mysql.mysqlPassword }}
+            - name: DB_HOST
+              value: {{ template "mysql.fullname" . }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
