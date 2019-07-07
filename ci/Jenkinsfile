@@ -22,7 +22,6 @@ node() {
         sh "docker login --username pmckenna25 --password $DOCKER_PASSWORD"
         sh "docker push $gitHashTag"
         sh "docker push $latestTag"
-        sh "echo Hello Ruxzor"
       }
     }
     stage('Package Helm Chart') {
