@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 node() {
-  try{
+  try {
 
     stage('Checkout'){
       checkout scm
@@ -16,7 +16,7 @@ node() {
       sh '/usr/local/bin/docker-compose down'
     }
 
-    if(env.BRANCH_NAME == "master") {
+    if (env.BRANCH_NAME == "master") {
       withCredentials([string(credentialsId: 'dockerpassword', variable: 'DOCKER_PASSWORD')]) {
         stage('Tag and Push to Docker Hub') {
           sh "docker build . -t $gitHashTag -t $latestTag"
@@ -28,9 +28,9 @@ node() {
       stage('Package Helm Chart') {
         docker.image('alpine/helm:2.14.0').inside("--entrypoint='' -u 0:0") {
           sh """
-          sed -E -i \
-            -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
-            "ci/helm/roleplaying/values.yaml"
+          sed - E - i \
+          -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
+          "ci/helm/roleplaying/values.yaml"
           """
           sh "cat ci/helm/roleplaying/values.yaml"
           sh "helm package \
@@ -40,7 +40,7 @@ node() {
         }
       }
     }
-  }catch(error){
+  } catch (error) {
     sh "/usr/local/bin/docker-compose down"
     throw error
   } finally {
