@@ -41,7 +41,9 @@ node() {
       }
     }
   }catch(error){
-    sh '/usr/local/bin/docker-compose down'
+    sh "/usr/local/bin/docker-compose down"
     throw error
+  } finally {
+    //sh "docker rmi mysql:5.7"
   }
 }
