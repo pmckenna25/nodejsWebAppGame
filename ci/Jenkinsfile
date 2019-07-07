@@ -31,7 +31,7 @@ node() {
       stage('Package Helm Chart') {
         docker.image('alpine/helm:2.14.0').inside("--entrypoint='' -u 0:0") {
           sh """
-          sed - E - i \
+          sed -E -i \
             -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
             "ci/helm/roleplaying/values.yaml"
           """
