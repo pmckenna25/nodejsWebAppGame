@@ -1,6 +1,9 @@
 #!/usr/bin/env groovy
+
+properties([pipelineTriggers([[$class: "GitHubPushTrigger"], pollSCM("")])])
+
 node() {
-  try{
+  try {
 
     stage('Checkout'){
       checkout scm
@@ -16,30 +19,34 @@ node() {
       sh '/usr/local/bin/docker-compose down'
     }
 
-    withCredentials([string(credentialsId: 'dockerpassword', variable: 'DOCKER_PASSWORD')]) {
-      stage('Tag and Push to Docker Hub') {
-        sh "docker build . -t $gitHashTag -t $latestTag"
-        sh "docker login --username pmckenna25 --password $DOCKER_PASSWORD"
-        sh "docker push $gitHashTag"
-        sh "docker push $latestTag"
+    if (env.BRANCH_NAME == "master") {
+      withCredentials([string(credentialsId: 'dockerpassword', variable: 'DOCKER_PASSWORD')]) {
+        stage('Tag and Push to Docker Hub') {
+          sh "docker build . -t $gitHashTag -t $latestTag"
+          sh "docker login --username pmckenna25 --password $DOCKER_PASSWORD"
+          sh "docker push $gitHashTag"
+          sh "docker push $latestTag"
+        }
       }
-    }
-    stage('Package Helm Chart') {
-      docker.image('alpine/helm:2.14.0').inside("--entrypoint='' -u 0:0") {
-        sh """
-        sed -E -i \
+      stage('Package Helm Chart') {
+        docker.image('alpine/helm:2.14.0').inside("--entrypoint='' -u 0:0") {
+          sh """
+          sed - E - i \
           -e 's/tag:.*/'"tag: '${gitHash}'"'/g' \
           "ci/helm/roleplaying/values.yaml"
-        """
-        sh "cat ci/helm/roleplaying/values.yaml"
-        sh "helm package \
-            --app-version='${gitHash}' \
-            --save=false ci/helm/roleplaying"
-        sh "helm inspect roleplaying-0.1.0.tgz"
+          """
+          sh "cat ci/helm/roleplaying/values.yaml"
+          sh "helm package \
+              --app-version='${gitHash}' \
+              --save=false ci/helm/roleplaying"
+          sh "helm inspect roleplaying-0.1.0.tgz"
+        }
       }
     }
-  }catch(error){
-    sh '/usr/local/bin/docker-compose down'
+  } catch (error) {
+    sh "/usr/local/bin/docker-compose down"
     throw error
+  } finally {
+    sh "docker volume rm roleplaying_${BRANCH_NAME}_db_data"
   }
 }

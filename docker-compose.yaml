@@ -34,7 +34,7 @@ services:
 
   smoke:
     <<: *app
-    command: sh -c "npm run smoke"
+    command: sh -c "sleep 10 && npm run smoke"
 
 volumes:
   db_data:

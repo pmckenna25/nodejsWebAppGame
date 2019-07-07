@@ -21,7 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(characterRoutes);
 app.use(welcomeRouter);
 
-
 const server = http.createServer(app);
 
 sequelize
