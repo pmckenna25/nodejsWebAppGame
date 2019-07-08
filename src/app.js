@@ -1,9 +1,20 @@
-const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyparser = require('body-parser');
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const config = require('./config');
+const tracer = require('dd-trace').init({
+  hostname: 'http://172.17.0.5',
+  port: 8126,
+  debug: true,
+  env: config.nodeEnv,
+});
+const span = tracer.startSpan('web.request');
+
+span.setTag('my_tag', 'my_value');
+span.finish()
+
+const express = require('express');
 const { configReady } = require('./terminus');
 
 const characterRoutes = require('./routes/characterRoutes');
@@ -43,10 +54,10 @@ createTerminus(server, {
       return configReadiness.length === 0
         ? Promise.resolve()
         : Promise.reject(
-            new HealthCheckError('Application not ready', configReadiness),
-          );
+          new HealthCheckError('Application not ready', configReadiness),
+        );
     },
   },
 });
 
-module.exports = app;
+module.exports = { app };
