@@ -2,13 +2,14 @@ const path = require('path');
 const http = require('http');
 const bodyparser = require('body-parser');
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
+const config = require('./config');
 const tracer = require('dd-trace').init({
   hostname: 'http://172.17.0.5',
   port: 8126,
   env: config.nodeEnv,
   logInjection: true,
   analytics: true,
-})
+});
 
 const { createLogger, format, transports } = require('winston');
 const addAppNameFormat = format(info => {
@@ -29,7 +30,6 @@ const logger = createLogger({
 });
 
 const express = require('express');
-const config = require('./config');
 const { configReady } = require('./terminus');
 
 const characterRoutes = require('./routes/characterRoutes');
