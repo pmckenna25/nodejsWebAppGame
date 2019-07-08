@@ -28,9 +28,9 @@ environment:
 nodeSelector: {}
 
 ingress:
-  enabled: true
-  host: roleplaying.philipmckenna.co.uk
-  secret: roleplaying-tls
+  enabled: false
+  # host: roleplaying.co.uk
+  # secret: roleplaying-tls
 
 hpa:
   enabled: true
@@ -46,8 +46,3 @@ mysql:
 
   persistence:
     size: 1Gi
-
-# TODO add mysql dependency and pvc
-# currently this would deploy the service
-# without any database and therefore not
-# function as intended
