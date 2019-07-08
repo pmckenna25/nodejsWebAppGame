@@ -6,28 +6,13 @@ const config = require('./config');
 const tracer = require('dd-trace').init({
   hostname: 'http://172.17.0.5',
   port: 8126,
+  debug: true,
   env: config.nodeEnv,
-  logInjection: true,
-  analytics: true,
 });
+const span = tracer.startSpan('web.request');
 
-const { createLogger, format, transports } = require('winston');
-const addAppNameFormat = format(info => {
-  info.ddtags = { 'logging-mvp': 'dd-tracing-logging-rolepaying' };
-  return info;
-});
-
-const logger = createLogger({
-  level: 'info',
-  exitOnError: false,
-  format: format.combine(
-    addAppNameFormat(),
-    format.json(),
-  ),
-  transports: [
-    new transports.Console(),
-  ],
-});
+span.setTag('my_tag', 'my_value');
+span.finish()
 
 const express = require('express');
 const { configReady } = require('./terminus');
@@ -75,4 +60,4 @@ createTerminus(server, {
   },
 });
 
-module.exports = { app, logger };
+module.exports = { app };

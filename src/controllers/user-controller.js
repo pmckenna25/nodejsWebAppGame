@@ -1,8 +1,6 @@
-const { logger } = require('../app');
 const Character = require('../models/Character');
 
 exports.getWelcome = (req, res) => {
-  logger.log('Visit to welcome page');
   res.render('user/welcome-page', {
     docTitle: 'Welcome Page',
     path: '/',
@@ -10,7 +8,6 @@ exports.getWelcome = (req, res) => {
 };
 
 exports.getAddCharacter = (req, res) => {
-  logger.log('Visit to add character page');
   res.render('user/add-character', {
     docTitle: 'Create Character',
     path: '/add-character',
@@ -19,12 +16,10 @@ exports.getAddCharacter = (req, res) => {
 };
 
 exports.getEditCharacter = (req, res) => {
-  logger.log('Visit to edit character page');
   const charId = req.params.Id;
 
   Character.findByPk(charId)
     .then(char => {
-      logger.log('edit character $charId');
       res.render('user/add-character', {
         character: char,
         docTitle: 'Edit Character',
@@ -33,7 +28,7 @@ exports.getEditCharacter = (req, res) => {
       });
     })
     // eslint-disable-next-line no-console
-    .catch(err => logger.log(err));
+    .catch(err => console.log(err));
 };
 
 exports.postEditCharacter = (req, res) => {
