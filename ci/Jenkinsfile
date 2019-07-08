@@ -4,7 +4,7 @@ properties([pipelineTriggers([[$class: "GitHubPushTrigger"], pollSCM("")])])
 
 node() {
   try {
-
+    setBuildStatus("Build running", "PENDING")
     stage('Checkout'){
       checkout scm
     }
@@ -45,8 +45,20 @@ node() {
     }
   } catch (error) {
     sh "/usr/local/bin/docker-compose down"
+    setBuildStatus("Build failed", "FAILURE")
     throw error
   } finally {
     sh "docker volume rm roleplaying_${BRANCH_NAME}_db_data"
   }
+  setBuildStatus("Build succeeded", "SUCCESS")
+}
+
+void setBuildStatus(String message, String state) {
+  step([
+    $class: "GitHubCommitStatusSetter",
+    reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/pmckenna25/nodejsWebAppGame"],
+    contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+    errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+    statusResultSource: [$class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
+  ])
 }
