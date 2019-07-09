@@ -1,18 +1,11 @@
 const path = require('path');
 const http = require('http');
 const bodyparser = require('body-parser');
+const logger = require('./logger');
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
 const config = require('./config');
-const tracer = require('dd-trace').init({
-  hostname: 'http://172.17.0.5',
-  port: 8126,
-  debug: true,
-  env: config.nodeEnv,
-});
-const span = tracer.startSpan('web.request');
-
-span.setTag('my_tag', 'my_value');
-span.finish()
+require('dd-trace').init({ logger })
+const expressWinston = require('express-winston');
 
 const express = require('express');
 const { configReady } = require('./terminus');
@@ -30,8 +23,15 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(characterRoutes);
+app.use(expressWinston.logger({
+  winstonInstance: logger
+}))
+
 app.use(welcomeRouter);
 
+app.use(expressWinston.logger({
+  winstonInstance: logger
+}))
 const server = http.createServer(app);
 
 sequelize
