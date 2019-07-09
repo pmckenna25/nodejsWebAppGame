@@ -46,7 +46,7 @@ node() {
     setBuildStatus("Build failed", "FAILURE")
     throw error
   } finally {
-    sh "docker volume rm roleplaying_${BRANCH_NAME}_db_data"
+    sh "docker volume prune -f"
   }
   setBuildStatus("Build succeeded", "SUCCESS")
 }
