@@ -1,1 +1,9 @@
 node_modules/
+.project
+.idea/
+*.tmproj
+.vscode/
+*.tgz
+*.swp
+*.bak
+*.tmp
