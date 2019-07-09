@@ -9,6 +9,7 @@
     "dd-trace": "^0.13.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "express-winston": "^3.2.1",
     "mocha": "^6.1.4",
     "mysql2": "^1.6.5",
     "node-dogstatsd": "0.0.7",
