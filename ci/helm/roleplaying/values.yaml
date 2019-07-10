@@ -46,3 +46,8 @@ mysql:
 
   persistence:
     size: 1Gi
+
+datadog:
+  env: roleplaying-qa
+  trace:
+    enabled: true

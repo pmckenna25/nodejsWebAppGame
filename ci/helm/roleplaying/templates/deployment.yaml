@@ -49,18 +49,28 @@ spec:
                 configMapKeyRef:
                   name: '{{ .Release.Name }}-configmap'
                   key: appPort
-            - name: DD_AGENT_HOST
-              value: datadog-agent
-            - name: DD_TRACE_AGENT_PORT
-              value: '8126'
             - name: MYSQL_DATABASE
               value: {{ .Values.mysql.mysqlDatabase }}
             - name: MYSQL_USER
               value: {{ .Values.mysql.mysqlUser }}
             - name: MYSQL_PASSWORD
               value: {{ .Values.mysql.mysqlPassword }}
-            - name: DB_HOST
-              value: {{ template "mysql.fullname" . }} 
+            - name: DD_SERVICE_NAME
+              value: {{ .Release.Name }}
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DD_TRACE_AGENT_PORT
+              value: "8126"
+            - name: DD_SERVICE_NAME
+              value: {{ .Release.Name }}
+            - name: DD_APM_ENV
+              value: "env:{{ .Values.datadog.env }}"
+            - name: DD_TRACE_GLOBAL_TAGS
+              value: "env:{{ .Values.datadog.env }},service:{{ .Release.Name }}"
+            - name: DD_TRACE_REPORT_HOSTNAME
+              value: "true"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
