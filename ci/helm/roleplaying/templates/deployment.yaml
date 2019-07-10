@@ -27,6 +27,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.container.port }}
+            - containerPort: 8126
+              name: traceport
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /live
