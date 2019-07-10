@@ -35,6 +35,8 @@ services:
   smoke:
     <<: *app
     command: sh -c "sleep 15 && npm run smoke"
+    environment:
+      - DD_TRACE_ENABLED=false
 
 volumes:
   db_data:
