@@ -13,7 +13,7 @@
     "mocha": "^6.1.4",
     "mysql2": "^1.6.5",
     "node-dogstatsd": "0.0.7",
-    "sequelize": "^4.0.0",
+    "sequelize": "^5.15.1",
     "supertest": "^4.0.2",
     "winston": "^3.2.1"
   },
