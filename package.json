@@ -10,7 +10,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-winston": "^3.2.1",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "mysql2": "^1.6.5",
     "node-dogstatsd": "0.0.7",
     "sequelize": "^4.0.0",
